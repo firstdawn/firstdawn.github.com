@@ -11,8 +11,8 @@ pygments: true
 #
 title : 第一个清晨
 tagline: by:小脑灰
-author :
-  name : Name Lastname
+author :answer
+  name : bob
   email : blah@email.test
   github : firstdawn
   twitter : username
