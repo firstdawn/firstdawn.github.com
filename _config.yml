@@ -11,12 +11,12 @@ pygments: true
 #
 title : 第一个清晨
 tagline: by:小脑灰
-author :bob
-  name : bob
-  email : blah@email.test
-  github : firstdawn
-  twitter : bob
-  feedburner : bob
+author :Bob
+  name : 小脑灰
+  email : answerbob@gmail.com
+  github : username
+  twitter : weibo.com/xiaohui0717
+  feedburner : feedname
 
 # The production_url is only used when full-domain names are needed
 # such as sitemap.txt 
