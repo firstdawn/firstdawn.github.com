@@ -12,7 +12,7 @@ pygments: true
 title : First Dawn
 tagline: by:Bob
 author :
-  name : Name Lastname
+  name : bob
   email : blah@email.test
   github : username
   twitter : username
