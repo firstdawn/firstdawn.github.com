@@ -24,13 +24,16 @@ Protocol Buffer的亮点就在于独特的编码方式，官网上有一个对va
 ![](http://1882.img.pp.sohu.com.cn/images/blog/2012/9/10/0/23/u251673670_13a6fb5f92cg86_blog.jpg)
 
    先从protobuf说起，建立个需要传输的数据结构的proto文件，
-{% capture text %}...
-<body>
-  <div id="sidebar"> ... </div>
-  <div id="main">
-  </div>
-</body>
-...{% endcapture %}
+{% capture text %}
+package codemsg;
+
+option java_package = "sce.proto.codemsg";
+option java_outer_classname = "CodeMsgs";
+
+message CodeMsg {
+   required sint32 code =1 [default=0];
+   required string msg =2 [default=""];
+}{% endcapture %}
 {% include JB/liquid_raw %}
 
 然后用proto编译器proto –java_out一下就生成出.java文件。
