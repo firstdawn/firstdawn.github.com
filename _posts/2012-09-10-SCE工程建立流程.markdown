@@ -65,6 +65,7 @@ module sce {
 
 
    这时候建议在eclipse上安装slice2java的插件，用slice2java生成相应的接口文件.
+ ![](http://1832.img.pp.sohu.com.cn/images/blog/2012/9/10/0/25/u251673670_13a6fb7f101g85_blog.jpg) 
 
 前四个文件是为服务器端准备的，~Disp.java是服务器骨架类的定义，在编写服务器端代码时需继承这个类，实现各个接口的功能。
 
