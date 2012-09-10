@@ -21,9 +21,9 @@ Protocol Buffer的亮点就在于独特的编码方式，官网上有一个对va
 <h2>SCE工程建立流程：</h2>
 
 总的来说分4个项目（引用涛哥的教学项目，这个项目很清晰）:
+<p>
 <img src="/image/1.jpg"  />
-![1.jpg](/image/1.jpg")
-
+</p>
 <h2>1.编写protobuf</h2>
 
    先从protobuf说起，建立个需要传输的数据结构的proto文件，
