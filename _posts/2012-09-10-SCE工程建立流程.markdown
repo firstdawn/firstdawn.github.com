@@ -24,7 +24,14 @@ Protocol Buffer的亮点就在于独特的编码方式，官网上有一个对va
 ![](http://1882.img.pp.sohu.com.cn/images/blog/2012/9/10/0/23/u251673670_13a6fb5f92cg86_blog.jpg)
 
    先从protobuf说起，建立个需要传输的数据结构的proto文件，
-<img src="/image/2.jpg"  />
+{% capture text %}...
+<body>
+  <div id="sidebar"> ... </div>
+  <div id="main">
+  </div>
+</body>
+...{% endcapture %}
+{% include JB/liquid_raw %}
 
 然后用proto编译器proto –java_out一下就生成出.java文件。
 
