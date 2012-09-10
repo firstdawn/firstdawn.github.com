@@ -6,7 +6,8 @@ tagline: by:日志
 {% include JB/setup %}
 
   此文仅用于日后给自己拾遗。
-  ICE（Internet Communications Engine）简介：Ice 是一种面向对象的中间件平台。
+  ICE（Internet Communications Engine）简介：Ice 是一种面向对象的中间件平台。下图为ICE客户与服务器内部逻辑结构：
+![](http://1812.img.pp.sohu.com.cn/images/blog/2012/9/10/13/2/u251673670_13a72890cbfg85_blog.jpg)
 
   SCE简介：SCE系统是我的搜狐下一代服务通信中间件，基于ICE，Protocol Buffer和Zookeeper的自动路由的分布式通信系统。      
 
