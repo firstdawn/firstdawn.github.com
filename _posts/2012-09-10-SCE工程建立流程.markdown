@@ -42,7 +42,26 @@ message CodeMsg {
 <h2>2. 编写Slice定义</h2>
 
 这个过程就对应图片上的slice文件夹，用slice语言定义出所要建立的应用的各个接口：
-<img src="/image/slice.jpg"  />
+{% capture text %}
+#ifndef HELLO_ICE
+#define HELLO_ICE
+module sce {
+  module slice {
+   module hello {
+   ["java:protobuf:sce.proto.codemsg.CodeMsgs.CodeMsg"] sequence<byte> PbCodeMsg;
+    interface HelloService {
+
+                PbCodeMsg sayHello(int code,string hello);
+
+          }; //interface over
+
+     };
+   };
+};
+
+#endif
+{% endcapture %}
+{% include JB/liquid_raw %}
 
 
    这时候建议在eclipse上安装slice2java的插件，用slice2java生成相应的接口文件.
