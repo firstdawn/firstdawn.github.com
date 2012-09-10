@@ -21,7 +21,7 @@ Protocol Buffer的亮点就在于独特的编码方式，官网上有一个对va
 <h2>SCE工程建立流程：</h2>
 
 总的来说分4个项目（引用涛哥的教学项目，这个项目很清晰）:
-![](https://developer.apple.com/library/ios/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/Art/app_life_cycle.png)
+![](http://1882.img.pp.sohu.com.cn/images/blog/2012/9/10/0/23/u251673670_13a6fb5f92cg86_blog.jpg)
 
    先从protobuf说起，建立个需要传输的数据结构的proto文件，
 <img src="/image/2.jpg"  />
