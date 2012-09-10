@@ -109,12 +109,10 @@ module sce {
 
 - 获取到代理对象后，就可以随心所欲调用该对象的方法了，任务就完成了。
 
-
 {% capture text %}
 public String sayHello() {
 
 return getAccountService().sayHello(1, "hello suc").getMsg();
 
-}
-{% endcapture %}
+}{% endcapture %}
 {% include JB/liquid_raw %}
