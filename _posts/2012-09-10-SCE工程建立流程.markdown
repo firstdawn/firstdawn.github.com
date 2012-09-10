@@ -103,7 +103,6 @@ module sce {
   通常的adapter继承SCE中的BaseAdapter 实现一个与服务端提供的服务相对应的接口，形式如HelloServiceAdapter extends BaseAdapter implements IHelloService。BaseAdapter 是架构组封装一些ICE操作的公共服务适配器，初始化ICE的连接配置、获取对象代理和对ICE通信器初始化、销毁操作。
 
 - 调用代理帮助类的方法checkedCast或者uncheckedCast来获取服务。传入和服务端对应的适配器名"Hello"和超时时间来获取服务。checkedCast与uncheckedCast都是向下转型，区别在于前者联系服务器，因为只有服务器的代理实现才确切知道某个对象的类型，可能会抛出连接超时或者对象不存在ConnectTimeoutException 、ObjectNotExistException异常，后者则不会联系服务器，如果类型失配，在后续操作中可能引发操作不存在OperationNotExistException的异常。
-
 - 获取到代理对象后，就可以随心所欲调用该对象的方法了，任务就完成了。
 {% capture text %}
 public String sayHello() {
