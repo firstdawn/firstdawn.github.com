@@ -67,17 +67,17 @@ module sce {
    这时候建议在eclipse上安装slice2java的插件，用slice2java生成相应的接口文件.
  ![](http://1832.img.pp.sohu.com.cn/images/blog/2012/9/10/0/25/u251673670_13a6fb7f101g85_blog.jpg) 
 
-前四个文件是为服务器端准备的，~Disp.java是服务器骨架类的定义，在编写服务器端代码时需继承这个类，实现各个接口的功能。
+- 前四个文件是为服务器端准备的，~Disp.java是服务器骨架类的定义，在编写服务器端代码时需继承这个类，实现各个接口的功能。
 
-~Del.java、~DelD.java、~DelM.java这三个文件包含的是供java映射内部使用的代码；它们包含的功能与应用程序员无关，无需过多关注。
+- ~Del.java、~DelD.java、~DelM.java这三个文件包含的是供java映射内部使用的代码；它们包含的功能与应用程序员无关，无需过多关注。
 
 其他文件供客户端使用，也就是adapter中会有调用。
 
-~Holder.java、~HolderPrx.java为接口或接口的代理定义接口类型。
+- ~Holder.java、~HolderPrx.java为接口或接口的代理定义接口类型。
 
-~Prx.java、~PrxHelper.java 定义代理接口、代理接口的帮助类。
+- ~Prx.java、~PrxHelper.java 定义代理接口、代理接口的帮助类。
 
-~Operations.java 里面的操作与Slice的定义文件相对应。
+- ~Operations.java 里面的操作与Slice的定义文件相对应。
 
 
 ##3. 编写服务器程序
