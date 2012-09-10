@@ -14,7 +14,8 @@ SCE简介：SCE系统是我的搜狐下一代服务通信中间件，基于ICE�
 
 个人认为Protocol Buffer用起来的简易程度到不怎么样，需要学习Protocol Buffer的语法：Message,枚举，嵌套等等。没有XML，json这种看起来简洁，要是看不到定义的.proto文件，只有Protocol Buffer编译器生成的.java文件，简单的数据结构还好，如果是嵌套了很多层的比较复杂的数据结构仅依靠自动生成的.java来梳理数据的逻辑那真是要吐血！
 
-Protocol Buffer的亮点就在于独特的编码方式，官网上有一个对varint 300的系列化过程https://developers.google.com/protocol-buffers/docs/encoding?hl=zh-CN，简单来讲就是最高位来区别是不是还有下一个字节，然后再一顿交换就能算出是300。
+Protocol Buffer的亮点就在于独特的编码方式，官网上有一个对varint 300的系列化过程https://developers.google.com/protocol-buffers/docs/encoding?hl=zh-CN，
+简单来讲就是最高位来区别是不是还有下一个字节，然后再一顿交换就能算出是300。
 
 这种编码方式能节省存储空间，进而提升了序列化的效率，其实这么多的序列化技术，好不好主要就看效率高不高，编码解码的效率高了，传输的数据自然就快的飞起。
 
