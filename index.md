@@ -16,7 +16,6 @@ tagline: by:小脑灰
 </ul>
 
 ## About me
-  <p>技术爱好者.正在努力前进中</p>
   <p><span>足迹:</span><a href="http://weibo.com/xiaohui0717">weibo</a></p>
   <p><span>Q Q:</span>87999405</p>
   <p><span>E-mail:</span>answerbob#gmail.com</p>
