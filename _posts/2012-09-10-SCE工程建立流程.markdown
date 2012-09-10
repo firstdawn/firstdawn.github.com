@@ -85,17 +85,17 @@ module sce {
 
    HelloServer.java,main()函数中实现SCE服务器，在try块中含有实际的服务器代码。
 
-  -调用Ice.Util.initialize 初始化Ice run time ，可能接收一些命令行参数。返回Ice.Communicator
+- 调用Ice.Util.initialize 初始化Ice run time ，可能接收一些命令行参数。返回Ice.Communicator
 
-  -调用Communicator 实例上的创建适配器方法ic.createObjectAdapterWithEndpoints("Hello", "default -p " + port),传入适配器名"Hello",缺省协议（TCP/IP）和端口号来监听客户端的请求。
+- 调用Communicator 实例上的创建适配器方法ic.createObjectAdapterWithEndpoints("Hello", "default -p " + port),传入适配器名"Hello",缺省协议（TCP/IP）和端口号来监听客户端的请求。
 
-  -创建一个实例化对象HelloServerI()。(在ICE中这种实例化对象被称为servant)。
+- 创建一个实例化对象HelloServerI()。(在ICE中这种实例化对象被称为servant)。
 
-  -调用适配器方法add，传入刚才的servant，并加上一个标示符"Hello"对应(b)中传入的适配器名。
+- 调用适配器方法add，传入刚才的servant，并加上一个标示符"Hello"对应(b)中传入的适配器名。
 
-  -激活适配器，一旦适配器被激活，适配器上所有的servant会开始处理来自客户端请求。（目前只对adapter只有一个servant的情况作过实验）。
+- 激活适配器，一旦适配器被激活，适配器上所有的servant会开始处理来自客户端请求。（目前只对adapter只有一个servant的情况作过实验）。
 
-  -调用ic.waitForShutdown()，挂起发出调用的线程，直到服务器终止。
+- 调用ic.waitForShutdown()，挂起发出调用的线程，直到服务器终止。
 
 
 ##4. 编写客户端adapter
