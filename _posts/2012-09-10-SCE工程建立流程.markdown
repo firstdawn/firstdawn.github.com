@@ -3,6 +3,7 @@ layout: post
 category : blog
 tagline: by:日志
 ---
+{% include JB/setup %}
 
   此文仅用于日后给自己拾遗。
   ICE（Internet Communications Engine）简介：Ice 是一种面向对象的中间件平台。
@@ -16,7 +17,7 @@ Protocol Buffer的亮点就在于独特的编码方式，官网上有一个对va
 
 这种编码方式能节省存储空间，进而提升了序列化的效率，其实这么多的序列化技术，好不好主要就看效率高不高，编码解码的效率高了，传输的数据自然就快的飞起。
 
-<h2>SCE工程建立流程：</h2>
+##1.SCE工程建立流程：
 
 总的来说分4个项目（引用涛哥的教学项目，这个项目很清晰）:
 ![](http://1882.img.pp.sohu.com.cn/images/blog/2012/9/10/0/23/u251673670_13a6fb5f92cg86_blog.jpg)
@@ -37,7 +38,7 @@ message CodeMsg {
   然后用proto编译器proto –java_out一下就生成出.java文件。
 
 
-<h2>2. 编写Slice定义</h2>
+##2. 编写Slice定义
 
   这个过程就对应图片上的slice文件夹，用slice语言定义出所要建立的应用的各个接口：
 {% capture text %}
@@ -78,7 +79,7 @@ module sce {
 ~Operations.java 里面的操作与Slice的定义文件相对应。
 
 
- <h2>3. 编写服务器程序</h2>
+##3. 编写服务器程序
 
    HelloServiceI.java,写成~I.java据说是编写ICE服务器的习惯，这个类继承服务器的骨架类~Disp.java，实现ice中接口定义的各个方法。
 
@@ -97,7 +98,7 @@ module sce {
   (f)调用ic.waitForShutdown()，挂起发出调用的线程，直到服务器终止。
 
 
-<h2>4. 编写客户端adapter</h2>
+##4. 编写客户端adapter
 
   通常的adapter继承SCE中的BaseAdapter 实现一个与服务端提供的服务相对应的接口，形式如HelloServiceAdapter extends BaseAdapter implements IHelloService。BaseAdapter 是架构组封装一些ICE操作的公共服务适配器，初始化ICE的连接配置、获取对象代理和对ICE通信器初始化、销毁操作。
 
