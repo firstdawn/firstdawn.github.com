@@ -5,14 +5,13 @@ tagline: by:日志
 ---
 
 此文仅用于日后给自己拾遗。
-
-    ICE（Internet Communications Engine）简介：Ice 是一种面向对象的中间件平台。
+ ICE（Internet Communications Engine）简介：Ice 是一种面向对象的中间件平台。
 
 SCE简介：SCE系统是我的搜狐下一代服务通信中间件，基于ICE，Protocol Buffer和Zookeeper的自动路由的分布式通信系统。      
 
 Protocol Buffer是一种数据序列化传输的格式。- <http://code.google.com/p/protobuf/>
 
-    个人认为Protocol Buffer用起来的简易程度到不怎么样，需要学习Protocol Buffer的语法：Message,枚举，嵌套等等。没有XML，json这种看起来简洁，要是看不到定义的.proto文件，只有Protocol Buffer编译器生成的.java文件，简单的数据结构还好，如果是嵌套了很多层的比较复杂的数据结构仅依靠自动生成的.java来梳理数据的逻辑那真是要吐血！
+个人认为Protocol Buffer用起来的简易程度到不怎么样，需要学习Protocol Buffer的语法：Message,枚举，嵌套等等。没有XML，json这种看起来简洁，要是看不到定义的.proto文件，只有Protocol Buffer编译器生成的.java文件，简单的数据结构还好，如果是嵌套了很多层的比较复杂的数据结构仅依靠自动生成的.java来梳理数据的逻辑那真是要吐血！
 
 Protocol Buffer的亮点就在于独特的编码方式，官网上有一个对varint 300的系列化过程-<https://developers.google.com/protocol-buffers/docs/encoding?hl=zh-CN>，
 简单来讲就是最高位来区别是不是还有下一个字节，然后再一顿交换就能算出是300。
