@@ -6,11 +6,12 @@ tagline: by:日志
 {% include JB/setup %}
 
 CometD是一个可扩展的基于HTTP实现comet的Ajax推送技术（随着更新也可以支持其他新兴的协议，比如Websocket）。
+
 Ps:comet在此处的定义为：为浏览器提供低延迟数据（Low Latency Data）。
 
 
-丰富一下背景知识（可跳过）
-Web交互的进化史
+###丰富一下背景知识-Web交互的进化史（可跳过）
+
 
 ##著名的F5大法
 
