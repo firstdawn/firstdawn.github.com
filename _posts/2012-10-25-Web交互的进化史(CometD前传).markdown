@@ -5,114 +5,56 @@ tagline: by:日志
 ---
 {% include JB/setup %}
 
-  此文仅用于日后给自己拾遗。
-  ICE（Internet Communications Engine）简介：Ice 是一种面向对象的中间件平台。下图为ICE客户与服务器内部逻辑结构：
-![](http://1812.img.pp.sohu.com.cn/images/blog/2012/9/10/13/2/u251673670_13a72890cbfg85_blog.jpg)
-
-  SCE简介：SCE系统是我的搜狐下一代服务通信中间件，基于ICE，Protocol Buffer和Zookeeper的自动路由的分布式通信系统。      
-
-   Protocol Buffer是一种数据序列化传输的格式。- <http://code.google.com/p/protobuf/>个人认为Protocol Buffer用起来的简易程度到不怎么样，需要学习Protocol Buffer的语法：Message,枚举，嵌套等等。没有XML，json这种看起来简洁，要是看不到定义的.proto文件，只有Protocol Buffer编译器生成的.java文件，简单的数据结构还好，如果是嵌套了很多层的比较复杂的数据结构仅依靠自动生成的.java来梳理数据的逻辑那真是要吐血！
-
-Protocol Buffer的亮点就在于独特的编码方式，官网上有一个对varint 300的系列化过程-<https://developers.google.com/protocol-buffers/docs/encoding?hl=zh-CN>，
-简单来讲就是最高位来区别是不是还有下一个字节，然后再一顿交换就能算出是300。
-
-这种编码方式能节省存储空间，进而提升了序列化的效率，其实这么多的序列化技术，好不好主要就看效率高不高，编码解码的效率高了，传输的数据自然就快的飞起。
-
-##1.SCE工程建立流程：
-
-总的来说分4个项目（引用涛哥的教学项目，这个项目很清晰）:
-![](http://1882.img.pp.sohu.com.cn/images/blog/2012/9/10/0/23/u251673670_13a6fb5f92cg86_blog.jpg)
-
-   先从protobuf说起，建立个需要传输的数据结构的proto文件，
-{% capture text %}
-package codemsg;
-
-option java_package = "sce.proto.codemsg";
-option java_outer_classname = "CodeMsgs";
-
-message CodeMsg {
-   required sint32 code =1 [default=0];
-   required string msg =2 [default=""];
-}{% endcapture %}
-{% include JB/liquid_raw %}
-
-  然后用proto编译器proto –java_out一下就生成出.java文件。
+CometD是一个可扩展的基于HTTP实现comet的Ajax推送技术（随着更新也可以支持其他新兴的协议，比如Websocket）。
+Ps:comet在此处的定义为：为浏览器提供低延迟数据（Low Latency Data）。
 
 
-##2. 编写Slice定义
+丰富一下背景知识（可跳过）
+Web交互的进化史
 
-  这个过程就对应图片上的slice文件夹，用slice语言定义出所要建立的应用的各个接口：
-{% capture text %}
-#ifndef HELLO_ICE
-#define HELLO_ICE
-module sce {
-  module slice {
-   module hello {
-   ["java:protobuf:sce.proto.codemsg.CodeMsgs.CodeMsg"] sequence<byte> PbCodeMsg;
-    interface HelloService {
+##著名的F5大法
 
-                PbCodeMsg sayHello(int code,string hello);
+犹记得高中时期，本屌上课时捧着NOKIA 3230刷NBA直播的场景，“*”号键刷的飞起，小朋友们不时投过来羡慕的期待的目光等着我直播比分。
+猛砸“*”号的过程就是不停的像服务器request实时数据的过程，每砸一次就建立一次HTTP连接，GET一条URL资源。
+这样的“实时”获取资源的效率可想而知是多么的低下，用户无法预知服务器端的数据是否更新，另一方面当服务器有数据变更时也没法通知给用户。大多数时间用户获取到的是同样的数据，而服务器也必须把整个页面数据一遍又一遍的response给用户。如果同时访问的用户不多，那么这样的资源浪费是容许的，而如果直播的是火箭-湖人的比赛无异于遭受DDOS攻击。
 
-          }; //interface over
+##Ajax
+最初听到这个词很诧异，总能联想到荷甲球队，还以为这项技术是“灰翔的荷兰人”发明的，其实毛关系都没有--！~。
+人家的全称是Asynchronous JavaScript and XML，异步 JavaScript 及 XML。听起来挺唬人的，其实也就那么回事。
+所谓的异步其实就是JavaScript去完成像服务器request的工作，request的或许只是需要更新的数据比如说NBA的比分，而不必去更新整个页面（标题啊，广告啊，还有评论里各种科黑、科蜜关于C罗，煤球王的对喷…）。
+- 轮询（polling）方式实现的Ajax,上j8。
+设定一个时间间隔不停的像服务器发起请求。
 
-     };
-   };
-};
+                   
+比起F5大法，AJAX只像服务器获取少量数据，然而仍无法预知何时服务器上的数据会更新，仍然会发起大量无用的请求，大量的并发依然会使服务器压力巨大。请求来的数据只是忽略了轮询间隔时间的“实时”数据, 调整轮询的间隔时间就是在数据的实时性与服务器压力之间的权衡。
 
-#endif
-{% endcapture %}
-{% include JB/liquid_raw %}
+- 捎带轮询（piggyback polling），这个不能叫做第二代Ajax，充其量是1s。
 
+捎带轮询（piggyback polling）是一种比轮询“更加聪明”的做法，因为它会删除掉所有非必需的请求（没有返回数据的那些）。不存在时间间隔，客户端在需要的时候向服务器端发送请求。
 
-   这时候建议在eclipse上安装slice2java的插件，用slice2java生成相应的接口文件.
- ![](http://1832.img.pp.sohu.com.cn/images/blog/2012/9/10/0/25/u251673670_13a6fb7f101g85_blog.jpg) 
+上面的介绍是在网上截下来的，“更加聪明”实则可以认为是个贬义词。“客户端会在需要的时候向服务器发送请求”，然而服务器数据更新的行为客户端是根本无法预知的，有可能服务器累积在服务端的数据因客户端未能发送请求而无法响应给客户端，实时性因此完败给F5大法。
 
-- 前四个文件是为服务器端准备的，~Disp.java是服务器骨架类的定义，在编写服务器端代码时需继承这个类，实现各个接口的功能。
+##Comet
 
-- ~Del.java、~DelD.java、~DelM.java这三个文件包含的是供java映射内部使用的代码；它们包含的功能与应用程序员无关，无需过多关注。
+Comet 技术可以实现主动向服务器推送数据。comet的优点在于它可以在任何时候向客户端发送数据，而不仅仅只是响应用户的输入请求。而发送数据是在一个已有的单连接上进行的。因此可以大大降低发送数据的延迟时间（建立connection的开销，以及客户端发送请求的等待时间）。
+Comet技术在HTTP上有好多种实现方式，不全介绍。
 
-其他文件供客户端使用，也就是adapter中会有调用。
+- 长轮询Long-poling
 
-- ~Holder.java、~HolderPrx.java为接口或接口的代理定义接口类型。
+客户端发送给服务器的请求，如果服务器没有数据，可以一直由服务器hold住，直到服务端有数据才会响应给客户端。这样做明显减少了客户端的请求数，大大减少的服务器的压力，节省了带宽资源。更重要的是真正实现了又服务器向客户端push数据。
 
-- ~Prx.java、~PrxHelper.java 定义代理接口、代理接口的帮助类。
-
-- ~Operations.java 里面的操作与Slice的定义文件相对应。
+这种长轮询方式仍是基于HTTP，然而由于HTTP是面向无连接的，如果一次request直到到了超时时间服务器仍没有数据响应，连接就会断开。长轮询的实现原理相当于做了一个超时非常长的request并且在超时错误的代码中不断的执行自己，一旦接受到数据后再重新发起请求。
 
 
-##3. 编写服务器程序
+- 流（Streaming）
 
-   HelloServiceI.java,写成~I.java据说是编写ICE服务器的习惯，这个类继承服务器的骨架类~Disp.java，实现ice中接口定义的各个方法。
-
-   HelloServer.java,main()函数中实现SCE服务器，在try块中含有实际的服务器代码。
-
-- 调用Ice.Util.initialize 初始化Ice run time ，可能接收一些命令行参数。返回Ice.Communicator
-
-- 调用Communicator 实例上的创建适配器方法ic.createObjectAdapterWithEndpoints("Hello", "default -p " + port),传入适配器名"Hello",缺省协议（TCP/IP）和端口号来监听客户端的请求。
-
-- 创建一个实例化对象HelloServerI()。(在ICE中这种实例化对象被称为servant)。
-
-- 调用适配器方法add，传入刚才的servant，并加上一个标示符"Hello"对应(b)中传入的适配器名。
-
-- 激活适配器，一旦适配器被激活，适配器上所有的servant会开始处理来自客户端请求。（目前只对adapter只有一个servant的情况作过实验）。
-
-- 调用ic.waitForShutdown()，挂起发出调用的线程，直到服务器终止。
+由下图可以看出客户端一旦建立连接，服务端就会给客户端猛推数据，客户端每次接收到数据不会释放连接或者再次发送请求。直到连接超时客户端会再次建立连接接收数据。
 
 
-##4. 编写客户端adapter
 
-  通常的adapter继承SCE中的BaseAdapter 实现一个与服务端提供的服务相对应的接口，形式如HelloServiceAdapter extends BaseAdapter implements IHelloService。BaseAdapter 是架构组封装一些ICE操作的公共服务适配器，初始化ICE的连接配置、获取对象代理和对ICE通信器初始化、销毁操作。
 
-- 调用代理帮助类的方法checkedCast或者uncheckedCast来获取服务。
 
-传入和服务端对应的适配器名"Hello"和超时时间来获取服务。checkedCast与uncheckedCast都是向下转型，区别在于前者联系服务器，因为只有服务器的代理实现才确切知道某个对象的类型，可能会抛出连接超时或者对象不存在ConnectTimeoutException 、ObjectNotExistException异常，后者则不会联系服务器，如果类型失配，在后续操作中可能引发操作不存在OperationNotExistException的异常。
 
-- 获取到代理对象后，就可以随心所欲调用该对象的方法了，任务就完成了。
-
-{% capture text %}
-public String sayHello() {
-
-return getAccountService().sayHello(1, "hello suc").getMsg();
-
-}{% endcapture %}
-{% include JB/liquid_raw %}
+- Websocket
+　　 WebSocket 是HTML5一种新的协议。基于TCP之上定义了帧协议。它是实现了浏览器与服务器的全双工通信。
+    在 WebSocket API 中，浏览器和服务器只需要要做一个握手的动作，然后，浏览器和服务器之间就形成了一条快速通道。两者之间就直接可以数据互相传送。
